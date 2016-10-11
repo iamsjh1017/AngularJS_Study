@@ -1,0 +1,26 @@
+<!-- 
+The ng-model Directive
+	Use the ng-model directive to bind data from the model to the view on HTML controls (input, select, textarea)
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+    <input ng-model="firstname">
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope) {
+    $scope.firstname = "John";
+    $scope.lastname = "Doe";
+});
+</script>
+
+<p>Use the ng-model directive on HTML controls (input, select, textarea) to bind data between the view and the data model.</p>
+
+</body>
+</html>
+
