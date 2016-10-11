@@ -1,0 +1,19 @@
+<!--
+As you have already seen, AngularJS directives are HTML attributes with an ng prefix.
+The ng-init directive initializes AngularJS application variables. 
+You can use data-ng-, instead of ng-, if you want to make your page HTML valid.
+
+앞서 본대로, AngularJS 디렉티브는 HTML속성에 ng를 앞에 붙인 형태로 사용한다.
+ng-init 디렉티브는 AngularJS 애플리케이션 변수를 선언한다.
+접두어 ng- 대신에 data-ng-를 사용하면  같은 효과에 유효한 HTML태그로 보이게 만든다. 
+-->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+<div data-ng-app="" data-ng-init="firstName='John'">
+<p>The name is <span data-ng-bind="firstName"></span></p>
+</div>
+</body>
+</html>
+

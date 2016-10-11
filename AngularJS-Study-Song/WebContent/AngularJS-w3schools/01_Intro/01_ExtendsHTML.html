@@ -1,0 +1,23 @@
+<!-- 
+AngularJS extends HTML with ng-directives.
+The ng-app directive defines an AngularJS application.
+The ng-model directive binds the value of HTML controls (input, select, textarea) to application data.
+The ng-bind directive binds application data to the HTML view.
+
+AngularJS는 HTML을 ng-directives로 확장시켜준다.
+ng-app 디렉티브는 AngularJS 어플리케이션을 정의한다.
+ng-model 디렉티브는 HTML컨트롤(input, select, textarea)의 value을  어플리케이션 데이터에 바인딩 시켜준다.
+ng-bind 디렉티브는 어플리케이션 데이터를 HTML뷰에 바인딩 시켜준다.
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="">
+ 	<p>Name: <input type="text" ng-model="name"></p>
+ 	<p ng-bind="name"></p>
+</div>
+
+</body>
+</html>
