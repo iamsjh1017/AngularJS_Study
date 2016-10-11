@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app ng-controller="PhoneListController">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script src="controller2.js"></script>
+</head>
+<body>
+	검색 : <input type="text" ng-model="searchKeyword">
+	정렬 : <select ng-model="orderProperty">
+				<option value="no" selected="selected">no</option>
+				<option value="name">name</option>
+				<option value="snippet">snippet</option>
+		   </select>
+	<ul>
+		<li ng-repeat="phone in phones | filter:searchKeyword | orderBy:orderProperty">
+			번호 : {{phone.no}}
+			이름 : {{phone.name}}
+			설명 : {{phone.snippet}}
+		</li>
+	</ul>
+	
+	검색 키워드 : {{searchKeyword || '없음'}}
+	정렬 : {{orderProperty}}
+</body>
+</html>
