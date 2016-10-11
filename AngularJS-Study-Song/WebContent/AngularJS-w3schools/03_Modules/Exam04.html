@@ -1,0 +1,23 @@
+<!-- 
+Modules and Controllers in Files
+	It is common in AngularJS applications to put the module and the controllers in JavaScript files.
+	In this example, "myApp.js" contains an application module definition, while "myCtrl.js" contains the controller:
+	
+Functions can Pollute the Global Namespace
+	Global functions should be avoided in JavaScript. They can easily be overwritten or destroyed by other scripts.
+	AngularJS modules reduces this problem, by keeping all functions local to the module.
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+{{ firstName + " " + lastName }}
+</div>
+
+<script src="myApp.js"></script>
+<script src="myCtrl.js"></script>
+
+</body>
+</html>
