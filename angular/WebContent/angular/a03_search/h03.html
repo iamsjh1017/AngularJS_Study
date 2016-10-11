@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="phone">
+<head>
+	<meta charset="utf-8">
+	<title>My HTML File</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+	<script src="m03.js"></script>
+	<script src="c03.js"></script>
+</head>
+<body ng-controller="PhoneListController">
+	<input type="text" ng-model="searchKeyword"/>
+	<!--
+		searchKeyword 라는 이름의 앵귤러 모델을 선언해주었다.
+		여기에 입력된 내용은 searchKeyword 라는 모델에 자동으로 들어간다.	
+	-->
+
+	<ul>
+		<li ng-repeat="phone in phones | filter:searchKeyword">
+			이름 : {{phone.name}}<br />
+			설명 : {{phone.snippet}}
+		</li>
+		<!--
+		비슷한거 같지만, 자세히 살펴보면, filter 가 추가되었다.
+		filter 함수는 ng-repeat에 영향을 주게 된다.
+		특별히 searchKeyword에 입력된 값에 따라 내용을 필터링해서 보여준다.
+		-->
+	</ul>
+</body>
+</html>

@@ -1,0 +1,330 @@
+* 권장 디렉토리 구조
+app/
+	css/
+	img/
+	js/
+		app.js			- 웹앱 메인 모듈
+		controllers.js	- 컨트롤러 모듈
+		directives.js	- 지시자 모듈
+		filters.js		- 필터 모듈
+		services.js		- 기타 서비스 모듈
+	lib/
+		angular/		- AngularJS 라이브러리 파일들
+	partials/			- View 템플릿 파일들
+	index.html			- 레이아웃 템플릿 파일
+...						- 테스트 라이브러리, 설정 파일, 스크립트 등
+
+
+* 보통 HTML 페이지는 하나의 모듈과 결합
+	- ng-app 지시자, angular.bootstrap() API, 의존성 주입
+	
+* 권장 모듈 - 서비스 모듈, 지시자 모듈, 필터 모듈, 앱 모듈 : 초기화 코드 등
+
+* 모듈 예제
+	angular.module('services', ['controllers'])
+	// 모듈 설정 --> 제공자만 주입 가능
+	.config(['$routeProvider', function ($routeProvider) {
+		$routeProvider.when('/items', {
+			templateUrl: 'partials/items.html', controller: 'itemListCtrl'
+		});
+	}])
+	// 모듈 초기화
+	.run(['$rootScope', function ($rootScope) {
+		$rootScope.on('error', function (err) {...});
+		...
+	}])
+	// 서비스 정의
+	.factory('apiService', ['$http', function (http) {
+		return {
+			loadItems: function(callback) {... callback(items);},
+			saveItem: function(item) {...},
+			deleteItem: function(item) {...},
+			...
+		};
+	}]);
+	
+* 의존성 주입 예제
+	angular.module('app', ['services'])
+	.run([
+		'$rootScope',
+		'apiService',
+		function (root, api) {
+			api.loadItems(function (items) {
+				root.items = items;
+			});
+		}
+	]);
+	
+    /******************************/
+	angular.module('sampleApp', [])
+    //factory 메소드의 첫번째 인자로 서비스 이름을 주고 다음으로 서비스를 제공하는 팩토리 함수를 정의한다.
+    .factory('hello', [function () {
+        return {
+            say : function (name) {
+                return "hello " + name;
+            }
+        }; 
+    }])
+    //서비스 이름인 hello를 컨트롤러 함수 인자로 주면 위 hello 팩토리 함수가 반환하는 객체가 주입된다.
+    controller('mainCtrl', function ($scope, hello) { 
+        $scope.greeting = hello.say("제이");
+    });
+    
+    /******************************/
+    angular.module('sampleApp', [])
+    .provider('hello', [function () {
+        var defaultGreeting = "hello";
+        //Module.config에서 전달받은 helloProvider를 통하여 사용할 수 있다.
+        this.setGreeting = function(newGreeting){
+            defaultGreeting = newGreeting;
+        };
+        //프로바이더 함수는 $get 메소드를 구현해야한다. 추후에 $injector에 의해 호출된다.
+        this.$get = [function(){
+            return {
+                say : function (name) {
+                    return defaultGreeting + " " + name;
+                }
+            }
+        }];
+    }])
+    //서비스 이름인 hello를 컨트롤러 함수 인자로 주면 위 $injector가 호출한 this.$get에 연결된 함수의 반환값이 인자로 주어진다.
+    controller('mainCtrl', function ($scope, hello) { 
+        $scope.greeting = hello.say("제이");
+    });
+    
+* Scope
+	모델 or 모델의 컨테이너
+	표현식의 실행 문맥
+	자식 Scope는 부모 Scope의 속성을 상속
+	컨트롤러와 일부 지시자들은 자식 Scope를 생성
+	최상위 Scope : $rootScope
+	Scope 이벤트는 상위 Scope로 전파 : $emit()
+	Scope 이벤트는 하위 Scope로 전파 : $broadcast()
+	모델 변화를 감시 : $watch()
+	AngularJS 외부에서 발생한 모델 변화를 내부에 전달 : $apply()
+	
+* Scope 예제
+	angular.module('app', [])
+	.config(['httpProvider', function ($httpProvider) {
+		$httpProvider.responseInterceptors.push(['$q', '$rootScope', function($q, $rootScope) {
+			$rootScope.pendingHttpRequests = 0;
+			return function (promise) {
+				$rootScope.pendingHttpRequests += 1;
+				return promise.then(function (res) {
+					$rootScope.pendingHttpRequests -= 1;
+					$rootScope.$broadcast('httpError', res.data);
+					return $q.reject(res);
+				});
+			};
+		}]);
+	}]);
+	
+	// 다른 모듈에서 $rootScope에서 발생한 이벤트 감시
+	angular.module('errorLogger', [])
+	.run(['$rootScope', function ($rootScope) {
+		$rootScope.on('httpError', function(event, error) {
+			console.error('http error: ', error);
+		});
+	}]);
+	
+	// 다른 모듈에서 상위 Scope($rootScope)에서 상속한 속성 감시
+	angular.module('controllers', [])
+	.controller('itemEditCtrl', ['$rootScope', '$scope', function ($rootScope, $scope) {
+		$rootScope.$watch('pendingHttpRequests', function(old, new) {
+			$scope.submitDisabled = (new > 3);
+		});
+	}]);
+	
+	// 뷰 템플릿에서 상위 Scope($rootScope)에서 상속한 속성 참조
+	<div ng-show="pendingHttpRequests">loading...</div>
+	
+* 컨트롤러
+	하나의 Scope와 결합
+	Scope 초기화, Scope에 행위(이벤트 핸들러) 추가
+	
+* 컨트롤러에서 하면 안되는 것들
+	DOM 조작			-> 지시자 사용
+	입력 포매팅			-> Form Control 지시자 사용
+	출력 필터링 		-> 필터 사용
+	다른 컨트롤러 접근	-> 서비스 사용
+	다른 컴포넌트의 생성 및 라이프 사이클 관리
+	
+* 컨트롤러 예제
+	파라미터의 이름을 통해 의존성 자동 주입
+	function ItemListCtrl ($scope, $location, apiService) {
+		apiService.loadItems(function (items) {
+			$scope.items = items;
+		});
+		$scope.editItem = function (item) {
+			$location.path('/items' + item.id + '/edit');
+		};
+		$scope.deleteItem = function (item) {
+			apiService.deleteItem(item);
+		};
+	}
+	
+	// 어노테이션을 이용한 명시적 의존성 주입
+	ItemListCtrl.$inject = ['$scope', '$location', 'apiService'];
+	
+	// 좀 더 복잡하지만 뽀대나는 방법ㅋㅋㅋㅋㅋㅋㅋㅋ뽀대 뭐냐
+	angular.module('controllers', [])
+	.controller('itemListCtrl', [
+	   '$scope',
+	   '$location',
+	   'apiService',
+	   function($scope, $location, apiService) {
+		   apiService.loadItems(function (items) {
+			   $scope.items = items;
+		   });
+		   $scope.editItem = function (item) {
+			   $location.path('/items/' + item.id + '/edit');
+		   };
+		   $scope.deleteItem = function (item) {
+			   apiService.deleteItem(item);
+		   };
+	   }
+	]);
+	
+* 뷰 & 템플릿
+	결합된 Scope 및 상위 Scope들의 속성을 포함한 자바스크립트와 유사한 표현식
+	{{title}}, {{item.length}}, {{1 + 2}}, {{'HelloWorld'.substring(5)}}
+	
+	- 필터
+	{{속성|필터}}
+	ex) {{title | uppercase}}
+	{{속성|필터:옵션}}
+	ex) {{created | date:'yyyy-MM-dd HH:mm:ss Z'}}
+	{{속성|필터1|필터2|필터3}}
+	ex) <li ng-repeat="item in items | filter:searchText | orderBy:created">
+	
+* 뷰 & 템플릿 예제
+	<html ng-app="app">
+	...
+	<body ng-controller="mainCtrl">
+		<header>
+			<div ng-include="'common-header.html'"></div>
+			<div ng-show="currentUser">
+				<p>Welcome, {{currentUser.username}}!</p>
+				<button ng-click="logout()">logout</login> //엥? button으로 닫는게 아니야?
+			</div>
+			<div ng-hide="currentUser" ng-controller="loginCtrl">
+				<input type="text" ng-model="username" />
+				<input type="password" ng-model="password" />
+				<button ng-click="login()">Login</login>
+				<a href="#/signup">Sign Up!</a>
+			</div>
+		</header>
+	...
+	
+	<div ng-controller="itemListCtrl">
+		<p>There're {{items.length}} items</p>
+		<ul>
+			<li ng-repeat="item in items">
+				<p>{{title}}</p>
+				<p>posted at {{created|date:'medium'}}</p>
+				<a href="#/item/{{id}}/edit">Edit</a>
+				<button ng-click="delete(item)">Delete</button>
+			</li>
+		</ul>
+	</div>
+	
+	<div ng-controller="itemAddCtrl">
+		<form ng-submit="addItem()">
+			<input type="text" ng-model="newItem.title" />
+			<button type="submit">Add</button>
+		</form>
+	</div>
+	...
+	
+* AngularJS의 MVC
+	function ItemListCtrl($scope) {
+		$scope.items = [
+		   {id:1, title:'first'},
+		   {id:2, title:'second'},
+		   {id:3, title:'third'}
+		];
+		
+		$scope.delete=function(item) {
+			delete $scope.items[item.id];
+		};
+	}
+
+	<html ng-app>	// ng-app -> $rootScope
+		<div ng-controller="ItemListCtrl">	// ng-controller -> ItemListCtrl Scope - items, delete()
+			<ul>
+				<li ng-repeat="item in items">	// ng-repeat -> ng-repeat Scope - id, title
+					{{item.title}}
+					<button ng-click="delete(item)">Delete</button>
+				</li>
+			</ul>
+		</div>
+	</html>
+
+* 라우팅
+	앱 모듈의 설정 단계에서, $routeProvider의 API를 통해 설정
+	$routeProvider.when(path, route)
+		- path: 라우팅 경로, URL 해시(#)
+				 경로 내에 :name 형식의 파라미터가 포함되면 $routeParams 서비스를 통해 전달
+		- route: 라우팅 설정
+				 - templateUrl: 템플릿 경로. ng-view 지시자가 사용
+				 - template: 템플릿 문자열
+				 - controller: 컨트롤러(서비스 ID 또는 생성자). $route, $routeParams 서비스를 주입할 수 있음
+				 - redirectTo: 리다이렉트 경로(또는 경로를 리턴하는 함수)
+	$routeProvider.otherwise(path): 기본 라우팅 경로
+	
+* 라우팅 예제
+	angular.module('app', ['controllers'])
+	.config('$routeProvider', function(routes) {
+		routes
+		.when('/items/new', {templateUrl:'form.html', controller:'formCtrl'})
+		.when('/items', {templateUrl:'list.html', controller:'listCtrl'})
+		.when('/items/:id/edit', {templateUrl:'form.html', controller:'formCtrl'})
+		.when('/items/:id', {templateUrl:'show.html', controller:'showCtrl'})
+		.otherwise('/items');
+	});
+	
+	angular.module('controllers', [])
+	.controller('itemFormCtrl',[$scope, $routeParams, $http, function(scope, params, http) {
+		if (params.id) {
+			http.get('/api/items/' + params.id).then(function (res) {
+				scope.item = res.data;
+				scope.title = 'Edit Item';
+			});
+		} else {
+			scope.title = 'New Item';
+			scope.item = {title: 'Untitled'};
+		}
+	}]);
+
+* 지시자
+	ng-app, ng-checked, ng-class, ng-controller, ng-form, ng-mousedown 등등
+
+* 커스텀 지시자 예제
+	// my-rating 지시자 정의
+	angular.module('directives', [])
+	.directive('my-rating', function() {
+		return function(scope, element, attrs) {
+			var tags = '';
+			var n = (isNaN(attrs.myRating)) ? 0 : parseFloat(attrs.myRating);
+			for (var i = 0; i < 5; i++) {
+				var suffix = ((i < n) ? 'full' : 'empty');
+				tags += '<img src="star-' + suffix + '.png" />';
+			}
+			element.html(tags);
+		};
+	});
+
+	// 앱 모듈에서 directives 모듈 로딩
+	angular.module('app', ['directives'])...
+	
+	// my-rating 지시자 사용
+	<span my-rating="{{rating}}"></span>
+	
+* 기본 필터
+	currency, date, filter, json, limitTo, lowercase, number, orderBy, uppercase
+	
+* 기본 서비스
+	$controller, $compile, $document, $filter, $http, $locale, $location 등등
+	
+* 전역 API
+	bind, bootstrap, element, equals, forEach, fromJson, isDate, toJson 등등

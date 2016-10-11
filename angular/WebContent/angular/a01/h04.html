@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My HTML File</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+</head>
+<body>
+	<!--
+		AngularJS 로딩 중 일어나는 과정
+		1. dependency injection을 위해 사용되는 인젝터 생성
+		2. 인젝터는 어플리케이션의 모델을 위한 컨텍스트가 되는 루트스코프 생성
+		3. Angular는 그 이후 ng-app의 루트 요소로부터 시작점을 삼아 하위요소들 컴파일
+		
+		한번 로딩되고 나면 브라우저에서 어떤 이벤트(마우스클릭, HTTP응답, 키 입력 등)가 입력될 때까지 기다림
+		이벤트가 일어나면 Angular는 이벤트를 인지하고 이 이벤트가 어떤 모델이든 변경시키고,
+		그 변화된 것을 찾게되면 Angular는 영향을 반영한 뷰를 리플렉트
+	 -->
+	<div ng-app="myApp">
+	    <div ng-controller="myController">
+	        {{test}}
+	    </div>
+	</div>
+	<script>
+		(function(){
+		    var myApp = angular.module('myApp', []);
+		    myApp.controller ('myController', function($scope){
+	            $scope.test = "안녕하세요!";
+	        });
+		})();
+	</script>
+</body>
+</html>

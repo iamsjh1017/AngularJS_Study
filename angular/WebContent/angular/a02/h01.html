@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+  <script src="js/c01.js"></script>
+</head>
+<body>
+  <!-- 
+  	모델 - Phone 객체들의 배열로 PhoneListCtrl 컨트롤러에 의해 제어
+  	뷰 - 데이터 모델의 값들이 HTML 템플릿을 통해 보여진 결과
+  	컨트롤러 - 뷰와 데이터 모델 사이를 연결. 데이터 바인딩 설정
+   -->
+  <div ng-app="myAppName">
+	  <ul ng-controller="PhoneListController">
+		 <li ng-repeat="phone in phones">
+			{{phone.name}}
+			<p>{{phone.snippet}}</p>
+		 </li>
+	  </ul>
+  </div>
+</body>
+</html>

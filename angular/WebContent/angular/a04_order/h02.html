@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app ng-controller="PhoneListController">
+<!--
+하위 모든 요소는 모두 앵귤러 어플리케이션으로 다뤄진다.
+-->
+ 
+ 
+<head>
+    <meta charset="utf-8">
+    <title>Google Phone Gallery</title>
+     
+    <script type="text/javascript" charset="utf-8"src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js">
+    </script>
+    <!--
+    이 태그는 당연하게도 앵귤러js를 로드하고, 더불어 HTML페이지가 모두 로드된 후에
+    브라우저에 의해 실행되는 콜백을 등록한다.
+    -->
+     
+    <script type="text/javascript" charset="utf-8" src="controller.js">
+    </script>
+    <!--
+    컨트롤러를 로드한다.
+    -->
+     
+</head>
+<body>
+     
+    검색 : 
+    <input type="text" ng-model="searchKeyword"/>
+    <!--
+    searchKeyword 라는 이름의 앵귤러 모델을 선언해주었다.
+    여기에 입력된 내용은 searchKeyword 라는 모델에 자동으로 들어간다. 
+    -->
+     
+    정렬 : 
+    <select ng-model="orderProperty">
+        <option value="name" selected>이름</option>
+        <option value="snippet">설명</option>
+        <option value="no">번호</option>
+    </select>
+    <!--
+    orderProperty 라는 임의의 이름으로 정렬 순서를 정해줄 앵귤러 모델을 선언해 주었다.   
+    -->
+     
+     
+    <ul>
+        <li ng-repeat="phone in phones | filter:searchKeyword | orderBy:orderProperty">
+            번호 : {{phone.no}}<br />
+            이름 : {{phone.name}}<br />
+            설명 : {{phone.snippet}}
+        </li>
+         
+        <!--
+        이번에는 orderBy 라는 항목이 추가되었다.
+        filter 함수가 매칭되는 내용을 찾는 거라면,
+        orderBy는 value에 할당된 값과 일치하는 객체의 요소명를 기준으로 정렬한다.
+        -->
+         
+    </ul>
+</body>
+</html>
