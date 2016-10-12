@@ -1,0 +1,35 @@
+<!-- 
+Use a Custom Service Inside a Filter
+	Once you have created a service, and connected it to your application, 
+	you can use the service in any controller, directive, filter, or even inside other services.
+	To use the service inside a filter, add it as a dependency when defining the filter:
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp">
+Convert the number 255, using a custom made service inside a custom made filter:
+
+<h1>{{255 | myFormat}}</h1>
+
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.service('hexafy', function() {
+    this.myFunc = function (x) {
+        return x.toString(16);
+    }
+});
+app.filter('myFormat',['hexafy', function(hexafy) {
+    return function(x) {
+        return hexafy.myFunc(x);
+    };
+}]);
+
+</script>
+
+</body>
+</html>
