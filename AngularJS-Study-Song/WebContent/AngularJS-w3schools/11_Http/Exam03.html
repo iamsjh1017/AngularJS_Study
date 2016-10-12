@@ -1,0 +1,44 @@
+<!-- 
+Properties
+	The response from the server is an object with these properties:
+
+		.config 	the object used to generate the request.
+					request를 생성하기위한 설정 객체
+		.data 		a string, or an object, carrying the response from the server.
+					서버로부터 받은 string, object타입의 response data.
+		.headers 	a function to use to get header information.
+					헤더 정보를 가져올때
+		.status 	a number defining the HTTP status.
+					HTTP통신 결과를 나타내는 숫자코드
+		.statusText a string defining the HTTP status.
+					HTTP통신 결과를 나타내는 문자열
+-->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+<p>Data : {{content}}</p>
+<p>Status : {{statuscode}}</p>
+<p>StatusText : {{statustext}}</p>
+
+</div>
+
+<p>The response object has many properties. This example demonstrate the value of the data, status, and statusText properties.</p>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http.get("welcome.htm")
+  .then(function(response) {
+      $scope.content = response.data;
+      $scope.statuscode = response.status;
+      $scope.statustext = response.statusText;
+  });
+});
+</script>
+
+</body>
+</html>
