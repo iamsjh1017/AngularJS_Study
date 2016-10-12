@@ -1,0 +1,23 @@
+<!-- 
+Data-Binding
+	Input controls provides data-binding by using the ng-model directive.
+	The application does now have a property named firstname.
+	The ng-model directive binds the input controller to the rest of your application.
+	The property firstname, can be referred to in a controller:
+-->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="">
+  <form>
+    First Name: <input type="text" ng-model="firstname">
+  </form>
+  <h1>You entered: {{firstname}}</h1>
+</div>
+
+<p>Change the name inside the input field, and you will see the name in the header changes accordingly.</p>
+
+</body>
+</html>
