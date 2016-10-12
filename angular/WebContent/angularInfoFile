@@ -28,11 +28,13 @@ app/
 			templateUrl: 'partials/items.html', controller: 'itemListCtrl'
 		});
 	}])
+	
 	// 모듈 초기화
 	.run(['$rootScope', function ($rootScope) {
 		$rootScope.on('error', function (err) {...});
 		...
 	}])
+	
 	// 서비스 정의
 	.factory('apiService', ['$http', function (http) {
 		return {
