@@ -1,0 +1,19 @@
+<!-- 
+The ng-show directive shows (or hides) an HTML element based on the value of ng-show.
+You can use any expression that evaluates to true or false:
+-->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app>
+<input ng-model="hour">
+<p ng-show="hour > 12">over 12 I am visible.</p>
+<p ng-show="hour <= 12">under 12 I am visible.</p>
+
+</div>
+
+</body>
+</html>
+

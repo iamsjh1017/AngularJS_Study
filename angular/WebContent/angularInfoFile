@@ -1,3 +1,16 @@
+* 앵귤러 웹 구조
+	document(모듈) > <html>(전체 메뉴와 같은 앱 공통 컨트롤러(CommonController)) > <div ng-view>(각 view에 해당하는 컨트롤러 동적 로딩)
+	
+* 앵귤러 웹 흐름
+	index.html -> main.js -> app.js -> route-config.js -> routes.js -> main.js
+
+* 일반적인 앵귤러
+	- Controller(controller) : UI 뒷단에서 data(스코프) 조작
+	- Directive : 스코프를 통해 컨트롤러와 커뮤니케이션하기 위해 DOM을 세팅, DOM 조작
+	- Template(view) : DOM의 요소에 directive 할당
+	- Scope(model 또는 viewmodel) : 시스템의 모든 조각들 사이에 데이터를 날라주는 역할
+	- Service : 주입 가능하고 재사용할 수 있는 코드들. 보통 Ajax, cookie, 기타 I/O와 같이 종속적인 것들
+
 * 권장 디렉토리 구조
 app/
 	css/
@@ -60,6 +73,8 @@ app/
     /******************************/
 	angular.module('sampleApp', [])
     //factory 메소드의 첫번째 인자로 서비스 이름을 주고 다음으로 서비스를 제공하는 팩토리 함수를 정의한다.
+    // .service() 메소드는 단순
+    // .factory() 리소스나 라이브러리를 초기화하는 일회성 설정 작업 같은 경우, 서비스 객체를 리턴하기 앞서서 코드 실행할 수 있도록 해줌
     .factory('hello', [function () {
         return {
             say : function (name) {
@@ -327,6 +342,16 @@ app/
 	
 * 기본 서비스
 	$controller, $compile, $document, $filter, $http, $locale, $location 등등
+	
+* angular + jquery
+	- 전체 프레임워크는 앵귤러로 디자인하고, 컨트롤러 하부에서 jQuery 등의 외부 라이브러리와 혼용해서 사용.
+	- 루트 프로바이더로 메뉴/페이지 구성을 하고, ng-view는 하나만 지원하기 때문에 ng-view마다 페이지를 읽어 들인 후,
+	  해당 페이지에 해당하는 컨트롤러에서 jQuery와 연동해서 여러 작업 수행.
+	- 각 페이지에 해당하는 컨트롤러는 루트 프로바이더에서 미리 지정.
+  
+* $compile
+	- 컨트롤러에서 ng-view 하나에만 값을 가져오는게 아니라 jQuery의 ajax를 사용해서 페이지를 읽어와야 할 때 사용.
+	- $.ajax()를 활용해서 불러오는 HTML 페이지에 앵귤러 표현이 포함되어 있는 경우 (ng-click 등이 전혀 인식되지 않는 상황)
 	
 * 전역 API
 	bind, bootstrap, element, equals, forEach, fromJson, isDate, toJson 등등

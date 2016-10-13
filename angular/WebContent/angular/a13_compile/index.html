@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="angular.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+angular.controller('appCtrl', ['$scope', '$compile' , function($scope, $compile) {
+ 	$.ajax({
+		url:"앵귤러가포함된HTML파일.html",
+		cache:'false',
+		success: function(data) {
+			//1단계 : 임의의 HTML 내용을 적용시키기 위해 먼저 HTML을 DOM 요소로 파싱한다.
+			var template = angular.element('<div>{{name}}</div>');
+			//2단계: 템플릿을 컴파일한다.
+			var linkFunction = $compile(template);
+			//3단계: 스코프를 컴파일한 템플릿과 연결한다.
+			linkFunction($scope);
+			//4단계: HTML 요소를 반영한다.
+			element.append( template );
+			//1-4단계를 한번에 처리
+			//element.append( $compile('<div>{{name}}</div>)($scope) );
+		}
+	})
+	//$compile 서비스로 먼저 앵귤러가 인식하도록 컴파일을 한번 해준후,
+	//실제 페이지에 추가해준다는 것이 핵심이다!!
+]}
+
+
+/*************************/
+/*
+// $container is a common jQuery variable naming convention for jQuery-wrapped DOM selectors
+var $container = $('#someContainer');
+$.ajax({
+	type: 'GET',
+	url: 'somePartial.htm',
+	success: function(data) {
+		$container.html(data);
+		// Make AngularJS kick in!
+		angular.compile($container)().$apply();
+	}
+});
+ */
+</script>
+</head>
+<body>
+
+</body>
+</html>
