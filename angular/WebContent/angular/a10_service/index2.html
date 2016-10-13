@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="myModule">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script>
+	var myModule = angular.module('myModule', []);
+	
+	function ControllerZero($scope) {
+	    $scope.handleClick = function(msg) {
+	        $scope.$broadcast('handleChild', {message : msg}); 
+	    };
+	    
+	    $scope.$on('updateParent', function(event, args) {
+	        $scope.message = 'ZERO: ' + args.message;
+	    });
+	}
+	
+	function ControllerOne($scope) {
+	    $scope.$on('handleChild', function(event, args) {
+	        $scope.message2 = 'ONE: ' + args.message;
+	    });        
+	    
+	    $scope.handleClick = function() {
+	        $scope.$emit('updateParent', {message: $scope.message2});
+	    };
+	    
+	}
+	
+	ControllerZero.$inject = ['$scope'];
+	
+	ControllerOne.$inject = ['$scope'];
+</script>
+</head>
+<body>
+	<div ng-controller="ControllerZero">
+	    <input ng-model="message">
+	    <button ng-click="handleClick(message);">LOG</button>
+	 
+	    <div ng-controller="ControllerOne">
+	        <input ng-model="message2" >
+	        <button ng-click="handleClick();">LOG 2</button>
+	    </div>    
+	</div>
+</body>
+</html>

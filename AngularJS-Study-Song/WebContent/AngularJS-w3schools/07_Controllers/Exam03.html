@@ -1,0 +1,24 @@
+<!-- 
+Controllers In External Files
+	In larger applications, it is common to store controllers in external files.
+	Just copy the code between the <script> tags into an external file named personController.js:
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" ng-controller="personCtrl">
+
+First Name: <input type="text" ng-model="firstName"><br>
+Last Name: <input type="text" ng-model="lastName"><br>
+<br>
+Full Name: {{fullName()}}
+
+</div>
+
+<script src="personController.js"></script>
+
+</body>
+</html>
+ 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js">
+    </script>
+</head>
+<body ng-controller="Root">
+	<h1>Selector Test</h1>
+        <p> elem is: {{elem}}</p>
+        
+        <div id="asd">foo</div>
+    <script>
+    function Root($scope) {
+        // you can't write out the element itself as JSON,
+        // because of circular object references,
+        // so I'll just write out the inner html.
+        $scope.elem = angular.element('#asd').html();
+    }
+    </script>
+</body>
+</html>

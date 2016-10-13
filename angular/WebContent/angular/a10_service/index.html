@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script>
+	var app=angular.module('myApp', []);
+	
+	app.factory('franksPizza', function() {
+	    var pizzaService = {};
+	    pizzaService.slicesLeft = 8;
+	        
+	    return pizzaService;
+	});
+	function Ctrl1($scope, franksPizza) {
+	    $scope.pizza = franksPizza;
+	}
+	function Ctrl2($scope, franksPizza) {
+	    $scope.pizza = franksPizza;
+	}
+</script>
+</head>
+<body ng-app="myApp">
+	<div ng-controller="Ctrl1">
+	    <h2>Ctrl1</h2>
+	    Slices Left: <input ng-model="pizza.slicesLeft">
+	</div>
+	<hr />
+	<div ng-controller="Ctrl2">
+	    <h2>Ctrl2</h2>
+	    Slices Left: {{pizza.slicesLeft}}
+	</div>
+</body>
+</html>

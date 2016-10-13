@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 600px; 
+    height: 250px;
+    font: 12px Tahoma;
+    color: #777;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+</head>
+<body>	
+	<div ng-app="myApp">
+    <div ng-controller="myController">
+        <div class="gridStyle" ng-grid="gridOptions"></div>
+    </div>
+</div>
+<script type="text/javascript">
+(function(){
+    
+    //'ngGrid' 모듈을 인젝션
+    var myApp = angular.module('myApp', ['ngGrid']);
+    
+    myApp.controller('myController', function($scope){
+        
+        //그리드 데이터
+        $scope.myData = [
+            {name: "John", age: 50, location: 'NY'},
+            {name: "Paul", age: 20, location: 'NY'},
+            {name: "Jessy", age: 30, location: 'LA'},
+            {name: "Nick", age: 40, location: 'LA'},
+            {name: "Joy", age: 52, location: 'NY'},
+            {name: "Johney", age: 20, location: 'NY'},
+            {name: "Kim", age: 53, location: 'LA'},
+            {name: "Son", age: 33, location: 'AR'},
+            {name: "Philip", age: 15, location: 'AR'},
+            {name: "Mike", age: 59, location: 'AR'},
+            {name: "Evans", age: 51, location: 'NY'},
+            {name: "Bob", age: 50, location: 'LA'}
+        ];
+        
+        //그리드 옵션
+        $scope.gridOptions = { 
+            data: 'myData',
+            enableCellSelection: true,
+            enableRowSelection: false,
+            enableCellEdit: true,
+            columnDefs: [
+                {field: 'name', displayName: 'Name', enableCellEdit: true}, 
+                {field:'age', displayName:'Age', enableCellEdit: true},
+                {field: 'location', displayName: 'Location', enableCellEdit: false}
+            ]
+        };
+ 
+    });    
+})();
+</script>
+</body>
+</html>

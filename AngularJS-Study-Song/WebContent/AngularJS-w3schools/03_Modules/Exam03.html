@@ -1,0 +1,24 @@
+<!-- 
+Adding a Directive
+	AngularJS has a set of built-in directives which you can use to add functionality to your application.
+	For a full reference, visit our AngularJS directive reference.
+	In addition you can use the module to add your own directives to your applications:
+ -->
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<div ng-app="myApp" w3-test-directive></div>
+
+<script>
+var app = angular.module("myApp", []);
+app.directive("w3TestDirective", function() {
+    return {
+        template : "I was made in a directive constructor!"
+    };
+});
+</script>
+
+</body>
+</html>
