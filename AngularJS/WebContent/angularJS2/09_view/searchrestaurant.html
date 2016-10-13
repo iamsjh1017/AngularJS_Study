@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="App.js"></script>
+<style type="text/css">
+	table, th, td {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	table tr:nth-child(odd) {
+		background-color: #f2f2f2;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+	li {
+		width: 200px;
+		list-style-type: none;
+		padding: 6px 10px;
+	}
+	li:hover {
+		background: #EEE;
+	}
+	
+	.animate-show {
+		-webkit-transition : all linear 0.5s;
+		transition: all linear 0.5s;
+		opacity : 1;
+	}
+	.animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+		display: inline-block !important; 
+	}
+	.animate-show-ng-hide {
+		opacity : 0;
+	}
+</style>
+</head>
+<body>
+	<h2> 메뉴판 첫 화면</h2>
+	<div ng-app="mainApp">
+		<p><a href="#addMenu">메뉴 추가</a></p>
+		<p><a href="#viewMenu">메뉴 보기</a></p>
+		<div ng-view></div>
+		
+		<script type="text/ng-template" id="addMenu.html">
+			<h2> 메뉴추가 </h2>
+			{{message}}
+		</script>
+		<script type="text/ng-template" id="viewMenu.html">
+			<h2> 메뉴보기 </h2>
+			{{message}}
+		</script>
+	</div>
+</body>
+</html>
