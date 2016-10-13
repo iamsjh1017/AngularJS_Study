@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+</head>
+<body ng-controller="asd">
+	<input type="text" ng-model="name">
+<script>
+	function asd ($scope) {
+		$scope.name = 'Guest';
+		
+		$scope.$watch('name', function(newValue, oldValue) {
+			window.alert('$scope.name의 값이 ' + $scope['name'] + '로 바뀌었습니다!');
+		}, true);	
+	}
+</script>
+</body>
+</html>

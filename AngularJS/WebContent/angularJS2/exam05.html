@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js" ></script>
+</head>
+<body>
+	<h2>필터와 테이블</h2>
+	<div ng-app="mainApp" ng-controller="menuController">
+		<table border="0">
+			<tr>
+				<td>메뉴 이름 : </td>
+				<td><input type="text" ng-model="menu.name"></td>
+			</tr>
+		
+			<tr>
+				<td>가격 : </td>
+				<td><input type="text" ng-model="menu.price"></td>
+			</tr>			
+		</table>
+		</br>
+		
+		<table border="0">
+			<tr>
+				<td>메뉴이름 대문자 : </td>
+				<td>{{menu.formatName() | uppercase}}</td>
+			</tr>						
+			<tr>
+				<td>메뉴이름 소문자 : </td>
+				<td>{{menu.formatName() | lowercase}}</td>
+			</tr>						
+			<tr>
+				<td>가격 : </td>
+				<td>{{menu.price | currency : "\\":0 }}</td>
+			</tr>						
+			<tr>
+				<td>메뉴판 : </td>
+				<td>
+					<ul>
+						<li ng-repeat="menuItem in menu.dishes | filter : name | orderBy : 'price'">
+							{{ menuItem.name + ", 가격:" + menuItem.price + "원"}}
+						</li>
+					</ul>
+				</td>
+			</tr>						
+		</table>
+	</div>
+	<script>
+		var mainApp = angular.module("mainApp", []);
+		
+		mainApp.controller('menuController', function ($scope) {
+			$scope.menu = {
+					name  : "Wings and Beer",
+				   price  : "16000",
+				   dishes : [
+				             {name:"양념치킨",price:16500},
+				             {name:"반반치킨",price:17000},
+				             {name:"마늘치킨",price:17000}
+				             ],
+			   formatName : function () {
+					var menuObject;
+					menuObject = $scope.menu;
+					return menuObject.name;
+			   }
+			};
+		});
+	</script>
+</body>
+</html>
