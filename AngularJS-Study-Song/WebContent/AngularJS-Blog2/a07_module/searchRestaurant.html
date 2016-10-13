@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="mainApp.js"></script>
+<script src="menuController.js"></script>
+<style>
+	table, th, td {
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	table tr:nth-child(odd) {
+		background-color: #f2f2f2;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+</style>
+</head>
+<body>
+	<div ng-app="mainApp" ng-controller="menuController">
+		<table border="0">
+			<tr>
+				<td>식당이름:</td>
+				<td><input type="text" ng-model="restaurant.name"></td>
+			</tr>
+			<tr>
+				<td>전화번호:</td>
+				<td>{{restaurant.phoneNumber()}}</td>
+			</tr>
+			<tr>
+				<td>메뉴판:</td>
+				<td>
+					<table>
+						<tr>
+							<th>메뉴</th>
+							<th>가격</th>
+						</tr>
+						<tr ng-repeat="menuItem in restaurant.menuList">
+							<td>{{menuItem.name}}</td>
+							<td>{{menuItem.price}}원</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
