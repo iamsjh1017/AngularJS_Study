@@ -1,0 +1,3 @@
+ng-view : 화면에서 다른 페이지를 삽입할 장소를 만들어 줌
+ng-template : script에서 html view를 만들어 줌. $routeProvider가 id 속성을 이용해서 view와 controller를 이어줌
+$routeProvider : Service중에 하나로 url 설정. html페이지와 controller를 연결시켜줌
