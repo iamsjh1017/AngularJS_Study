@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script src="module.js"></script>
+<script src="controller.js"></script>
+<style type="text/css">
+	table, th, td {
+		border: 1px solid grey;
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	table tr:nth-child(odd) {
+		background-color: #f2f2f2;
+	}
+	table tr:nth-child(even) {
+		background-color: #ffffff;
+	}
+</style>
+</head>
+<body>
+	<h2> 식당 메뉴판 검색 </h2>
+	
+	<div ng-app = "mainApp" ng-controller="menuController">
+		<table border="0">
+			<tr>
+				<td>식당 이름 :</td>
+				<td><input type="text" ng-model="restaurant.name"></td>
+			</tr>
+			<tr>
+				<td>전화 번호 :</td>
+				<td>{{restaurant.phoneNumber()}}</td>
+			</tr>
+			<tr>
+				<td>메뉴판 :</td>
+				<td>
+					<table>
+						<tr>
+							<th>메뉴</th>
+							<th>가격</th>							
+						</tr>
+						<tr ng-repeat = "menuItem in restaurant.menuList">
+							<td>{{menuItem.name}}</td>
+							<td>{{menuItem.price}}원</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<script>
+		mainApp.controller("menuController", function($scope) {
+			$scope.restaurant = {
+					name : "solar",
+				  number : "010-1111-1111",
+				menuList : [
+				            {name:"후라이드치킨",price:16000},
+				            {name:"양념치킨",price:17000},
+				            {name:"마늘치킨",price:17000},
+				            {name:"반반치킨",price:17000}
+				            ],
+			 phoneNumber : function () {
+				var restaurantObj;
+				restaurantObj = $scope.restaurant;
+				return $scope.restaurant.number;
+			 }
+			};
+		});
+	</script>
+</body>
+</html>
