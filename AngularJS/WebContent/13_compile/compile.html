@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+<script>
+var app = angular.module('myApp', []);
+app.controller('컨트롤러명', ['$scope', '$compile' , function($scope, $compile)
+                         {
+                         	//jQuery API인 $.ajax()를 활용해 HTML 페이지를 불러온다.
+                         	$.ajax({
+                         		url:"앵귤러가포함된HTML파일.html",
+                         		cache:'false',
+                         		success: function(data)
+                         		{
+                         			element.append( $compile('<div>{{name}}</div>')($scope) );
+                         		}
+                         	}).done(function()
+                         	{
+                         		//완료된 후?
+                         	});
+                         	
+                         	
+                         	//$compile 서비스로 먼저 앵귤러가 인식하도록 컴파일을 한번 해준후,
+                         	//실제 페이지에 추가해준다는 것이 핵심이다!!
+                         	
+                         }
+                         ])
+//element.append( $compile('<div>{{name}}</div>)($scope) );
+</script>
+</head>
+<body> 
+</body>
+</html>
