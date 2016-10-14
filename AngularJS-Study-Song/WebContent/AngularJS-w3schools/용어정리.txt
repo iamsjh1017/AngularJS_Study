@@ -1,2 +1,0 @@
-directives	지시자
-service		서비스
