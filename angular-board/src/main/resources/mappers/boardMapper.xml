@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.angular.repository.mapper.ChickenDAO">
+	<select id="getMenu" resultType="menu">
+		select no, name, price
+		  from chicken
+	</select>
+	<insert id="writeMenu" parameterType="menu">
+		insert into chicken(name,price) values(#{name},#{price});
+	</insert>
+	<update id="updateMenu" parameterType="menu">
+		update chicken
+		   set name = #{name},
+		       price = #{price}
+		 where no = #{no}
+	</update>
+	<delete id="deleteMenu" parameterType="int">
+		delete 
+		  from chicken
+		 where no = #{no}
+	</delete>
+	<select id="detailMenu" parameterType="int" resultType="menu">
+		select no, name, price
+		  from chicken
+		 where no = #{no}
+	</select>
+</mapper> 
