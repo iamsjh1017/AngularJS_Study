@@ -26,7 +26,6 @@ mainApp.controller("MenuController", function ($scope, $http) {
 		.success(function(data) {
 			clearData();
 			$scope.menuItems = data;
-			chickenMenu = data;
 		});
 		
 	}
@@ -39,6 +38,12 @@ mainApp.controller("MenuController", function ($scope, $http) {
 	$scope.setSelected = function (no) {
 		menuNo = no;
 		$("#editModal").modal();
+		$http({
+			url : "/angular/chicken/detailMenu.do?no=" + no
+		})
+		.success (function (data) {
+			$scope.selected = data;
+		});
 	}
 	
 	$scope.update = function () {

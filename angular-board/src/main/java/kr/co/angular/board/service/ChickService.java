@@ -10,4 +10,5 @@ public interface ChickService {
 	public void writeMenu(MenuVO mv) throws Exception;
 	public void updateMenu(MenuVO mv) throws Exception;
 	public void deleteMenu(int no) throws Exception;
+	public MenuVO detailMenu(int no) throws Exception;
 }

@@ -34,4 +34,9 @@ public class ChickServiceImpl implements ChickService {
 		dao.deleteMenu(no);
 	}
 
+	@Override
+	public MenuVO detailMenu(int no) throws Exception {
+		return dao.detailMenu(no);
+	}
+
 }

@@ -25,4 +25,7 @@ public class ChickenDAO {
 	public void deleteMenu(int no) {
 		sql.delete("kr.co.angular.repository.mapper.ChickenDAO.deleteMenu", no);
 	}
+	public MenuVO detailMenu(int no) {
+		return sql.selectOne("kr.co.angular.repository.mapper.ChickenDAO.detailMenu", no);
+	}
 }

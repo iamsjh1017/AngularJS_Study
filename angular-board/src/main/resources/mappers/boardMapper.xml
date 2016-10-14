@@ -22,4 +22,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from chicken
 		 where no = #{no}
 	</delete>
+	<select id="detailMenu" parameterType="int" resultType="menu">
+		select no, name, price
+		  from chicken
+		 where no = #{no}
+	</select>
 </mapper> 
