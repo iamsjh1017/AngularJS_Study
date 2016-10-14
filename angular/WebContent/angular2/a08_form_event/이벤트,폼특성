@@ -1,0 +1,20 @@
+* Events
+	ng-click : 클릭시 작동
+	ng-dbl-click : 더블 클릭시 작동
+	ng-mousedown : 마우스를 누르고 있으면 작동
+	ng-mouseup : 클릭이 끝날 때 작동
+	ng-mouseenter : 커서를 해당부분에 올려놓으면 작동
+	ng-mouseleave : 커서가 해당부분에서 나가면 작동
+	ng-mousemove : 마우스가 해당부분에서 움직일때마다 작동
+	ng-mouseover : ng-mouseenter와 비슷
+	ng-keydown : 키보드 키를 누르고 있을 때 작동
+	ng-keyup : 키보드 키가 떼일 때 작동
+	ng-keypress : 키보드 키를 눌렀다가 떼면 작동
+	ng-change : 입력하거나 데이터가 바뀔때마다 작동
+	
+* Form Properties (폼 특성)
+	$valid : (boolean) 정해진 규칙을 기반으로 맞는지 확인
+	$invalid : (boolean) 정해진 규칙을 기반으로 틀린지 확인
+	$pristine : (boolean) 입력값이 변경되지 않았는지 확인
+	$dirty : (boolean) 입력값이 변경됐는지 확인
+	$error : 에러를 보여줌 

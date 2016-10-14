@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="resources/js/app/mainApp.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="MenuController">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<td>메뉴이름</td>
+				<td>가격</td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="item in menuItems" ng-click="setSelected(item.name)" data-target="#editModal">
+			<tr class="info">
+				<td>{{item.name}}:</td>
+				<td>{{item.price}}원</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="form-group">
+		<label class="control-label" for="inputDefault">메뉴이름</label>
+		<input ng-model="menu.name" type="text" class="form-control" id="addMenuForm" placeholder="메뉴이름">
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="inputDefault">가격</label>
+		<input ng-model="menu.price"type="text" class="form-control" id="addPriceForm" placeholder="가격">
+	</div>
+	<div class="form-group">
+		<div class="col-lg-10 col-lg-offset-2">
+			<button type="submit" class="btn btn-success" ng-click="addMenuItem()">입력</button>
+			<button type="reset" class="btn btn-info" ng-click="reset()">취소</button>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span><span class="sr-only">닫기</span></button>
+	        <h4 class="modal-title" id="exampleModalLabel">메뉴 수정</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">메뉴이름:</label>
+	            <textarea class="form-control" id="menu-name" ng-model="selected.name"></textarea>
+	          </div>
+	          <div class="form-group">
+	            <label for="message-text" class="control-label">가격:</label>
+	            <textarea class="form-control" id="menu-price" ng-model="selected.price"></textarea>
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" ng-click="update()">수정</button>
+	        <button type="button" class="btn btn-default" ng-click="delete()">삭제</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>
