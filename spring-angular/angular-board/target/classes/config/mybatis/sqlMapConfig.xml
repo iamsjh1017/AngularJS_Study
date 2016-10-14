@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- SQL의 결과를 담을 VO 객체들의 별칭을 설정하여 사용의 편의를 도모  -->
+	<typeAliases>
+		<typeAlias alias="member" type="kr.co.mlec.member.MemberVO" />
+		<typeAlias alias="file" type="kr.co.mlec.member.FileVO" />
+	</typeAliases>
+
+</configuration>

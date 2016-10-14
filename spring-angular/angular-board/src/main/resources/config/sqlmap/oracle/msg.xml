@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mlec.member.MessageDAO">
+	<select id="getMemberInfo" parameterType="java.util.List" resultType="member">
+	select member_no as memberNo, id, name, pass, postalCode, address, detailAddress, email, profile, faceBook, major, regDate, recentlyDate 
+	from mlec_member 
+	where
+		<foreach collection="list" item="item" index="index" separator="and">
+		<choose>
+			<when test='item == "ㄱ"'>
+				substr(name,#{index}+1,1) &gt;= '가' and substr(name,#{index}+1,1) &lt;= '나'
+			</when>
+			<when test='item == "ㄴ"'>
+				substr(name,#{index}+1,1) &gt;= '나' and substr(name,#{index}+1,1) &lt;= '다'
+			</when>
+			<when test='item == "ㄷ"'>
+				substr(name,#{index}+1,1) &gt;= '다' and substr(name,#{index}+1,1) &lt;= '라'
+			</when>
+			<when test='item == "ㄹ"'>
+				substr(name,#{index}+1,1) &gt;= '라' and substr(name,#{index}+1,1) &lt;= '마'
+			</when>
+			<when test='item == "ㅁ"'>
+				substr(name,#{index}+1,1) &gt;= '마' and substr(name,#{index}+1,1) &lt;= '바'
+			</when>
+			<when test='item == "ㅂ"'>
+				substr(name,#{index}+1,1) &gt;= '바' and substr(name,#{index}+1,1) &lt;= '사'
+			</when>
+			<when test='item == "ㅅ"'>
+				substr(name,#{index}+1,1) &gt;= '사' and substr(name,#{index}+1,1) &lt;= '아'
+			</when>
+			<when test='item == "ㅇ"'>
+				substr(name,#{index}+1,1) &gt;= '아' and substr(name,#{index}+1,1) &lt;= '자'
+			</when>
+			<when test='item == "ㅈ"'>
+				substr(name,#{index}+1,1) &gt;= '자' and substr(name,#{index}+1,1) &lt;= '차'
+			</when>
+			<when test='item == "ㅊ"'>
+				substr(name,#{index}+1,1) &gt;= '차' and substr(name,#{index}+1,1) &lt;= '카'
+			</when>
+			<when test='item == "ㅋ"'>
+				substr(name,#{index}+1,1) &gt;= '카' and substr(name,#{index}+1,1) &lt;= '타'
+			</when>
+			<when test='item == "ㅌ"'>
+				substr(name,#{index}+1,1) &gt;= '타' and substr(name,#{index}+1,1) &lt;= '파'
+			</when>
+			<when test='item == "ㅍ"'>
+				substr(name,#{index}+1,1) &gt;= '파' and substr(name,#{index}+1,1) &lt;= '하'
+			</when>
+			<when test='item == "ㅎ"'>
+				substr(name,#{index}+1,1) &gt;= '하' and substr(name,#{index}+1,1) &lt; '힣'
+			</when>
+			<otherwise>
+				name LIKE CONCAT('%', #{item}, '%')
+			</otherwise>
+		</choose>
+		</foreach>
+<!-- 	where substr(name,1,1) &gt;= '아' and substr(name,1,1) &lt;= '자' -->
+		 
+  		 	 
+
+	</select>
+    </mapper>
+    
