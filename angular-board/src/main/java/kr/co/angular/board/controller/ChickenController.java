@@ -35,4 +35,11 @@ public class ChickenController {
 		service.updateMenu(mv);
 		return service.getMenu();
 	}
+	
+	@RequestMapping("deleteMenu.do")
+	@ResponseBody
+	public List<MenuVO> deleteMenu(int no) throws Exception {
+		service.deleteMenu(no);
+		return service.getMenu();
+	}
 }

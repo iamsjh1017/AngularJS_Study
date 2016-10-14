@@ -55,4 +55,17 @@ mainApp.controller("MenuController", function ($scope, $http) {
 			$scope.menuItems = data;
 		});
 	};
+	
+	$scope.del = function () {
+		$http({
+			url : "/angular/chicken/deleteMenu.do",
+		 method : "POST",
+		   data : $.param({no:menuNo}),
+		headers : { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+		})
+		.success(function (data) {
+			$scope.menuItems = data;
+			$("#editModal").modal('hide');
+		});
+	}
 });

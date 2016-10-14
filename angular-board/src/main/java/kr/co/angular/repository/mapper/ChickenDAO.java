@@ -22,4 +22,7 @@ public class ChickenDAO {
 	public void updateMenu(MenuVO mv) {
 		sql.update("kr.co.angular.repository.mapper.ChickenDAO.updateMenu",mv);
 	}
+	public void deleteMenu(int no) {
+		sql.delete("kr.co.angular.repository.mapper.ChickenDAO.deleteMenu", no);
+	}
 }

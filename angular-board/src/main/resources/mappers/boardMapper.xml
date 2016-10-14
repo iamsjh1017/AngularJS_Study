@@ -17,4 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       price = #{price}
 		 where no = #{no}
 	</update>
+	<delete id="deleteMenu" parameterType="int">
+		delete 
+		  from chicken
+		 where no = #{no}
+	</delete>
 </mapper> 
