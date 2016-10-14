@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crud.repository.mapper.ChickenMapper">
+
+<!-- 치킨 등록 -->
+<insert id="insertChicken" parameterType="ChickenVO">
+	insert into chicken(name, price)
+	values (#{name}, #{price})
+</insert>
+
+<!-- 모든 치킨 조회 -->
+<select id="selectChicken" resultType="ChickenVO">
+	select *
+	from chicken
+</select>
+
+<!-- 치킨 상세 조회 -->
+<select id="selectChickenByName" parameterType="string" resultType="ChickenVO">
+	select *
+	from chicken
+	where name = #{name}
+</select>
+
+<!-- 치킨 가격 수정 -->
+<update id="updateChicken" parameterType="ChickenVO">
+	update chicken
+	set
+		price = #{price}
+	where name = #{name}
+</update>
+
+<!-- 치킨 삭제 -->
+<delete id="deleteChicken" parameterType="string">
+	delete from chicken
+	where name = #{name}
+</delete>
+ 	
+</mapper> 
